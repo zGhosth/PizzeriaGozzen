@@ -1,0 +1,117 @@
+body {
+    background-color: #F2F2F2;
+    color: #333;
+    font-family: 'Arial', sans-serif;
+}
+
+header {
+    background-color: #D9534F;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+h1, h2, h3 {
+    color: #D9534F;
+}
+
+button {
+    background-color: #5BC0DE;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #D9534F;
+}
+
+.card {
+    background-color: white;
+    border: 1px solid #E6E6E6;
+    border-radius: 15px;
+    padding: 20px;
+    margin: 15px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.footer {
+    background-color: #5CB85C;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+#lista-carrito .list-group-item {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    padding: 10px 20px;
+}
+
+#lista-carrito .list-group-item .cantidad {
+    font-weight: bold;
+    color: #D9534F;
+}
+
+/* 🎯 Carrusel modernizado */
+.carousel-inner {
+    height: 500px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.carousel-inner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.5s ease-in-out;
+}
+
+.carousel-item.active img {
+    transform: scale(1.02);
+}
+
+/* Flechas del carrusel */
+.carousel-control-prev,
+.carousel-control-next {
+    background-color: transparent !important;
+    border: none !important;
+    padding: 10px;
+    transition: transform 0.3s ease;
+}
+
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+    transform: scale(1.1);
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    filter: invert(1); /* Blancas */
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    padding: 10px;
+}
+
+/* Responsive para móviles */
+@media (max-width: 768px) {
+    .carousel-inner {
+        height: 300px;
+    }
+}

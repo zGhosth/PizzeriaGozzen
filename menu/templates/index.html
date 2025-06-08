@@ -1,0 +1,174 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda Web de Pizzas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+        html, body {
+            height: 100%;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+        main {
+            flex: 1;
+        }
+        .carousel img {
+            max-height: 400px;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <header class="bg-danger text-white text-center py-4">
+        <h1 class="text-white">Pizzeria Gozzen</h1>
+        <nav>
+            <ul class="nav justify-content-center">
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{% url 'inicio' %}">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{% url 'menu' %}">Menú</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{% url 'login' %}">Iniciar Sesión</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{% url 'ubicacion' %}">Ubicación</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container my-5">
+        <section id="menu">
+            <h2 class="text-center mb-4">Nuestro Menú</h2>
+            <div class="row">
+                <div class="col-12 col-sm-6 col-lg-4 mb-4">
+                    <div class="card">
+                        <img src="/static/img/margarita-web-scaled.jpg" class="card-img-top" alt="Pizza Margarita">
+                        <div class="card-body text-center">
+                            <h3 class="card-title">Pizza Margarita</h3>
+                            <h3 class="card-title">$8000</h3>
+                            <p class="card-text">Tomate, mozzarella, albahaca</p>
+                            <button class="btn btn-danger" onclick="agregarCarrito('Pizza Margarita', 8000)">Agregar al carrito</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-4 mb-4">
+                    <div class="card">
+                        <img src="{% static 'img/pepperoni-web-scaled.jpg' %}" class="card-img-top" alt="Pizza pepperoni">
+                        <div class="card-body text-center">
+                            <h3 class="card-title">Pizza Pepperoni</h3>
+                            <h3 class="card-title">$7000</h3>
+                            <p class="card-text">Pepperoni, Mozzarella</p>
+                            <button class="btn btn-danger" onclick="agregarCarrito('Pizza Pepperoni', 7000)">Agregar al carrito</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-4 mb-4">
+                    <div class="card">
+                        <img src="/static/img/pollo-bbq-web-scaled.jpg" class="card-img-top" alt="Pizza pollo bbq">
+                        <div class="card-body text-center">
+                            <h3 class="card-title">Pizza pollo BBQ</h3>
+                            <h3 class="card-title">$8000</h3>
+                            <p class="card-text">Salsa BBQ, Pollo, Queso</p>
+                            <button class="btn btn-danger" onclick="agregarCarrito('Pizza 3 Quesos', 8000)">Agregar al carrito</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-4 mb-4">
+                    <div class="card">
+                        <img src="/static/img/PizzaTodasLasCarnes.jpg" class="card-img-top" alt="Pizza Todas Las Carnes">
+                        <div class="card-body text-center">
+                            <h3 class="card-title">Pizza Todas Las Carnes</h3>
+                            <h3 class="card-title">$8500</h3>
+                            <p class="card-text">Tomate, mozzarella, Salame, pollo, carne, Tocino</p>
+                            <button class="btn btn-danger" onclick="agregarCarrito('Pizza Todas Las Carnes', 8500)">Agregar al carrito</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-4 mb-4">
+                    <div class="card">
+                        <img src="/static/img/PizzaVegetariana.jpg" class="card-img-top" alt="Pizza Vegetariana">
+                        <div class="card-body text-center">
+                            <h3 class="card-title">Pizza Vegetariana</h3>
+                            <h3 class="card-title">$7000</h3>
+                            <p class="card-text">Doble Mozzarela, Aceitunas, Champiñones, Pimenton, Cebolla</p>
+                            <button class="btn btn-danger" onclick="agregarCarrito('Pizza Primavera', 7000)">Agregar al carrito</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-4 mb-4">
+                    <div class="card">
+                        <img src="/static/img/PizzaSuperTejana.jpg" class="card-img-top" alt="Pizza Super Tejana">
+                        <div class="card-body text-center">
+                            <h3 class="card-title">Pizza Super Tejana</h3>
+                            <h3 class="card-title">$8000</h3>
+                            <p class="card-text">Doble Mozzarella, Choricillo, pepperoni, Tocino, Cebolla </p>
+                            <button class="btn btn-danger" onclick="agregarCarrito('Pizza Gozzen', 8000)">Agregar al carrito</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="carrito" class="mt-4">
+            <h3>Tu Carrito</h3>
+            <ul id="lista-carrito" class="list-group mb-3"></ul>
+            <h4 id="total-carrito" class="text-end text-danger fw-bold">Total: $0</h4>
+        </section>
+        <script>
+    const carrito = {};
+
+    function agregarCarrito(pizza, precio) {
+        if (carrito[pizza]) {
+            carrito[pizza].cantidad++;
+        } else {
+            carrito[pizza] = { cantidad: 1, precio: precio };
+        }
+        mostrarCarrito();
+    }
+
+    function mostrarCarrito() {
+        const listaCarrito = document.getElementById('lista-carrito');
+        listaCarrito.innerHTML = '';
+
+        let total = 0;
+
+        Object.keys(carrito).forEach(pizza => {
+            const item = carrito[pizza];
+            total += item.cantidad * item.precio;
+
+            const div = document.createElement('li');
+            div.className = 'list-group-item d-flex justify-content-between align-items-center';
+            div.textContent = `${pizza} - Cantidad: ${item.cantidad}`;
+
+            const precioSpan = document.createElement('span');
+            precioSpan.className = 'badge bg-primary rounded-pill';
+            precioSpan.textContent = `$${item.cantidad * item.precio}`;
+
+            div.appendChild(precioSpan);
+            listaCarrito.appendChild(div);
+        });
+
+        const totalElemento = document.getElementById('total-carrito');
+        totalElemento.textContent = `Total: $${total}`;
+    }
+    </script>
+    </main>
+
+    <footer class="bg-dark text-white text-center py-3">
+        <p>&copy; 2024 Pizzería Gozzen. Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="{% static 'js/scripts.js' %}"></script>
+</body>
+</html>
