@@ -120,54 +120,93 @@
             </div>
         </section>
 
-        <section id="carrito" class="mt-4">
-            <h3>Tu Carrito</h3>
-            <ul id="lista-carrito" class="list-group mb-3"></ul>
-            <h4 id="total-carrito" class="text-end text-danger fw-bold">Total: $0</h4>
-        </section>
-        <script>
+    <section id="carrito" class="mt-4">
+    <h3>Tu Carrito</h3>
+    <ul id="lista-carrito" class="list-group mb-3"></ul>
+    <h4 id="total-carrito" class="text-end text-danger fw-bold">Total: $0</h4>
+    <!-- Botón de pago con Stripe -->
+    <div class="text-end mt-3">
+        <button id="boton-pago" class="btn btn-success">Pagar con Stripe</button>
+    </div>
+</section>
+
+<script src="https://js.stripe.com/v3/"></script>
+
+<script>
     const carrito = {};
 
-    function agregarCarrito(pizza, precio) {
-        if (carrito[pizza]) {
-            carrito[pizza].cantidad++;
+    function agregarCarrito(nombre, precio) {
+        if (carrito[nombre]) {
+            carrito[nombre].cantidad++;
         } else {
-            carrito[pizza] = { cantidad: 1, precio: precio };
+            carrito[nombre] = { cantidad: 1, precio: precio };
         }
         mostrarCarrito();
     }
 
     function mostrarCarrito() {
         const listaCarrito = document.getElementById('lista-carrito');
+        const totalCarrito = document.getElementById('total-carrito');
         listaCarrito.innerHTML = '';
-
         let total = 0;
 
-        Object.keys(carrito).forEach(pizza => {
-            const item = carrito[pizza];
-            total += item.cantidad * item.precio;
+        Object.keys(carrito).forEach(nombre => {
+            const item = carrito[nombre];
+            const subtotal = item.precio * item.cantidad;
+            total += subtotal;
 
-            const div = document.createElement('li');
-            div.className = 'list-group-item d-flex justify-content-between align-items-center';
-            div.textContent = `${pizza} - Cantidad: ${item.cantidad}`;
-
-            const precioSpan = document.createElement('span');
-            precioSpan.className = 'badge bg-primary rounded-pill';
-            precioSpan.textContent = `$${item.cantidad * item.precio}`;
-
-            div.appendChild(precioSpan);
-            listaCarrito.appendChild(div);
+            const li = document.createElement('li');
+            li.className = 'list-group-item d-flex justify-content-between align-items-center';
+            li.innerHTML = `<span>${nombre} (x${item.cantidad})</span><span>$${subtotal}</span>`;
+            listaCarrito.appendChild(li);
         });
 
-        const totalElemento = document.getElementById('total-carrito');
-        totalElemento.textContent = `Total: $${total}`;
+        totalCarrito.textContent = `Total: $${total}`;
     }
-    </script>
+
+    document.getElementById("boton-pago").addEventListener("click", function () {
+        let total = 0;
+        Object.keys(carrito).forEach(nombre => {
+            const item = carrito[nombre];
+            total += item.cantidad * item.precio;
+        });
+
+        if (total === 0) {
+            alert("Tu carrito está vacío. Agrega productos antes de pagar.");
+            return;
+        }
+
+        fetch("/crear_checkout/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ total: total })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.id) {
+                const stripe = Stripe("pk_test_51RelIPE3G3azYwCiSmg0PViuwnWWCA0lBVswoSN3FOLAxI7LQhuQ46RaaiSZj0ZukCGQUGN90iLVeP0Hr3OqE6Fg00edwAZTUk");  // 🔁 Reemplaza con tu clave pública de Stripe
+                stripe.redirectToCheckout({ sessionId: data.id });
+            } else {
+                alert("Error: No se pudo crear la sesión de pago.");
+                console.error("Respuesta:", data);
+            }
+        })
+        .catch(error => {
+            console.error("Error en la petición a Stripe:", error);
+            alert("Hubo un problema al iniciar el pago.");
+        });
+    });
+</script>
+
     </main>
 
-    <footer class="bg-dark text-white text-center py-3">
-        <p>&copy; 2024 Pizzería Gozzen. Todos los derechos reservados.</p>
-    </footer>
+<footer class="bg-dark text-white text-center py-3 w-100">
+    <p class="mb-0">&copy; 2024 Pizzería Gozzen. Todos los derechos reservados.</p>
+</footer>
+
+
 
     <script src="{% static 'js/scripts.js' %}"></script>
 </body>
